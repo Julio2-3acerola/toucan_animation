@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toucan — diagnóstico de bancada</title>
+<meta name="description" content="Toucan guia o técnico pela análise de notebooks e PCs direto do pendrive: prints padronizados, testes sem internet, fotos pelo celular e laudo por link.">
+<meta name="theme-color" content="#0f1a14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 22h22v20H8a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4z' fill='%23121514'/%3E%3Crect x='28' y='22' width='22' height='20' rx='2' fill='%23394045'/%3E%3Cpath d='M18 22h14l12 10-12 10H18z' fill='%23ff8a00'/%3E%3Cpath d='M18 22h14l12 10H18z' fill='%23ffd400'/%3E%3Cpath d='M38 27l6 5-6 5z' fill='%231a1a1a'/%3E%3Crect x='50' y='26' width='10' height='12' rx='1' fill='%23c9ced3'/%3E%3Ccircle cx='15' cy='28' r='3.2' fill='%23ffffff'/%3E%3Ccircle cx='15.6' cy='28' r='1.5' fill='%23000'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<a class="skip" href="#etapas">Pular para o conteúdo</a>
+<div class="loader" id="loader" role="status" aria-label="Carregando"><b>Toucan</b><i></i></div>
+<canvas id="pendrive" aria-hidden="true"></canvas>
+<button class="capbtn" id="capbtn" type="button">Abrir capa</button>
+<script>setTimeout(function(){document.getElementById('loader').classList.add('done');document.body.classList.add('loaded')},3400)</script>
+
+<header class="top">
+  <a class="brand" href="#" aria-label="Toucan, início">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 22h22v20H8a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4z" fill="var(--model-head)" stroke="var(--model-shell)"/><rect x="28" y="22" width="22" height="20" rx="2" fill="var(--model-shell)" opacity=".9"/><path d="M18 22h14l12 10-12 10H18z" fill="var(--model-beak)"/><path d="M18 22h14l12 10H18z" fill="var(--model-ridge)"/><path d="M38 27l6 5-6 5z" fill="var(--model-tip)"/><rect x="50" y="26" width="10" height="12" rx="1" fill="#c9ced3"/><rect x="7" y="27" width="4" height="10" fill="var(--color-bg)"/><circle cx="15" cy="28" r="3.2" fill="var(--model-eye)"/><circle cx="15.6" cy="28" r="1.5" fill="#000"/></svg>
+    Toucan
+  </a>
+  <nav aria-label="Seções">
+    <a href="#etapas">Como funciona</a>
+    <a href="#recursos">Recursos</a>
+    <a href="#nuvem">Nuvem</a>
+    <a href="#comecar">Começar</a>
+    <a href="#duvidas">Dúvidas</a>
+  </nav>
+  <a class="btn ghost top-login" href="https://toucan-sistema.web.app/painel/">Entrar</a>
+</header>
+
+<main>
+  <section class="cine c-hero" id="topo" data-theme="dark">
+  <div class="col">
+    <h1><span class="line"><span>O diagnóstico</span></span><span class="line"><span>inteiro cabe</span></span><span class="line"><span>num pendrive.</span></span></h1>
+    <p class="lead reveal d1">Toucan guia o técnico pela análise de notebooks e PCs: abre os programas de teste, tira os prints com o nome certo, recebe as fotos do celular e manda tudo para o laudo.</p>
+    <div class="actions reveal d2">
+      <a class="btn primary" href="https://github.com/IgVilhena/diagnostico-tecnico-releases/releases/latest/download/DiagnosticoTecnico.exe">Baixar para Windows</a>
+      <a class="btn ghost" href="#etapas">Ver como funciona</a>
+    </div>
+    <p class="fine reveal d2">Windows 10 e 11, ou Sergei Strelec WinPE. Não precisa instalar.</p>
+  </div>
+  <svg class="fb" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 22h22v20H8a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4z" fill="var(--model-head)" stroke="var(--model-shell)"/><rect x="28" y="22" width="22" height="20" rx="2" fill="var(--model-shell)" opacity=".9"/><path d="M18 22h14l12 10-12 10H18z" fill="var(--model-beak)"/><path d="M18 22h14l12 10H18z" fill="var(--model-ridge)"/><path d="M38 27l6 5-6 5z" fill="var(--model-tip)"/><rect x="50" y="26" width="10" height="12" rx="1" fill="#c9ced3"/><rect x="7" y="27" width="4" height="10" fill="var(--color-bg)"/><circle cx="15" cy="28" r="3.2" fill="var(--model-eye)"/><circle cx="15.6" cy="28" r="1.5" fill="#000"/></svg>
+</section>
+
+<section class="cine c-light txt-r section-entrada workflow-scroll" id="etapas" data-theme="light">
+  <div class="workflow-sticky">
+    <div class="entrada-ambient" aria-hidden="true"></div>
+
+    <div class="num reveal" id="wf-giant-num" data-speed="-.15">01</div>
+
+    <div class="col entrada-col">
+      <div class="entrada-kicker reveal">
+        <span class="entrada-badge" id="wf-badge">Etapa 1 · Entrada</span>
+        <span class="entrada-count" id="wf-count">Etapa 1 de 3</span>
+      </div>
+
+      <nav class="entrada-tabs reveal d1" aria-label="Etapas do diagnóstico">
+        <button type="button" class="entrada-tab is-active" data-step="0" aria-current="step">
+          <span class="entrada-tab-num">01</span> Entrada
+        </button>
+        <button type="button" class="entrada-tab" data-step="1">
+          <span class="entrada-tab-num">02</span> Diagnóstico
+        </button>
+        <button type="button" class="entrada-tab" data-step="2">
+          <span class="entrada-tab-num">03</span> Saída
+        </button>
+      </nav>
+
+      <!-- Pilha sobreposta para transição contínua sem saltos de altura -->
+      <div class="wf-stage-stack reveal d1">
+        <article class="wf-panel is-visible" data-panel="0" aria-hidden="false">
+          <h2>Todo diagnóstico começa aqui.</h2>
+          <p class="copy">
+            Fotos do equipamento como chegou: tampa, base, as quatro laterais, tela e teclado. Cada foto que falta aparece com o nome, é só clicar. Pelo celular, basta escanear o QR Code: as fotos chegam pela rede local, sem nuvem e sem aplicativo.
+          </p>
+        </article>
+
+        <article class="wf-panel" data-panel="1" aria-hidden="true">
+          <h2>Testes na ordem certa.</h2>
+          <p class="copy">
+            O Toucan abre HWiNFO, CrystalDiskInfo, FurMark e os outros na ordem certa e registra os testes de teclado, áudio, câmera e portas.
+          </p>
+        </article>
+
+        <article class="wf-panel" data-panel="2" aria-hidden="true">
+          <h2>Do diagnóstico ao laudo.</h2>
+          <p class="copy">
+            Depois da manutenção, os mesmos prints e testes de novo, as fotos do depois, o PDF e o link para o laudo.
+          </p>
+        </article>
+      </div>
+
+      <p class="wf-pendencia-note reveal d2">
+        O rodapé mostra o que falta em cada etapa. Dá para avançar com pendência: o Toucan avisa, mas não trava.
+      </p>
+
+      <div class="entrada-progress-wrap reveal d2" aria-label="Progresso das etapas">
+        <div class="entrada-steps-mini" aria-hidden="true">
+          <span class="wf-mini-num is-active" data-mini="0">01</span>
+          <span>/</span>
+          <span class="wf-mini-num" data-mini="1">02</span>
+          <span>/</span>
+          <span class="wf-mini-num" data-mini="2">03</span>
+        </div>
+        <div class="entrada-bar" role="progressbar" id="wf-progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
+          <span class="entrada-bar-fill" id="wf-bar-fill"></span>
+        </div>
+      </div>
+
+      <div class="entrada-nav reveal d3">
+        <button type="button" class="entrada-btn entrada-btn-prev" id="wf-prev">← Etapa anterior</button>
+        <button type="button" class="entrada-btn entrada-btn-next" id="wf-next">Próxima etapa →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cine c-green" id="sincronia" data-theme="dark">
+  <div class="num reveal" data-speed="-.15">04</div>
+  <svg class="lines" data-speed=".2" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 240C160 240 200 80 360 100S600 220 800 40" fill="none" stroke="#d5aa58" stroke-width="1.5" stroke-dasharray="3 9"/><circle cx="360" cy="100" r="5" fill="#ffd400"/><circle cx="800" cy="40" r="5" fill="#ff8a00"/></svg>
+  <div class="col">
+    <h2 class="reveal d1">Sua bancada. Em qualquer lugar.</h2>
+    <p class="copy reveal d2">Com a conta da loja, cada OS salva vai sozinha para a nuvem. As fotos seguem para o Google Drive da loja, e o painel do dono reúne as OS de todos os pendrives, com busca por número, técnico e equipamento. Sem internet, as OS ficam na fila e vão depois.</p>
+  </div>
+</section>
+
+<section class="cine c-end" id="final" data-theme="dark">
+  <h2 class="reveal d1">Transforme sua bancada.</h2>
+  <div class="actions reveal d2">
+    <a class="btn primary" href="https://github.com/IgVilhena/diagnostico-tecnico-releases/releases/latest/download/DiagnosticoTecnico.exe">Baixar para Windows</a>
+    <a class="btn ghost" href="https://toucan-sistema.web.app/painel/">Entrar no painel</a>
+  </div>
+</section>
+
+  <section class="band alt" aria-label="Tela do sistema Toucan">
+    <div class="wrap">
+      <h2>A bancada inteira na tela</h2>
+      <p class="sub">Programas de teste à esquerda, checklist completo à direita e atalhos <kbd>F9</kbd> e <kbd>F8</kbd> sempre prontos.</p>
+      <img class="shot" src="tela-diagnostico.png" width="1460" height="900" loading="lazy" alt="Tela Fazer análise do Toucan na etapa Diagnóstico: programas de teste à esquerda e resultado dos testes à direita">
+    </div>
+  </section>
+
+  <section id="recursos" class="band">
+    <div class="wrap">
+      <h2>Feito para a bancada</h2>
+      <div class="feature-main">
+        <div>
+          <h3>Print com o nome certo, sempre</h3>
+          <p><kbd>F9</kbd> maximiza a janela e tira a tela inteira, com data e hora. <kbd>F8</kbd> tira só a janela ativa. O arquivo já sai com o número da OS e o nome do programa, e nada é sobrescrito: o print refeito ganha <code>_2</code>.</p>
+        </div>
+        <p class="filename"><span class="sr">Exemplo de nome de arquivo: </span><span class="prefix">OS_12312_PRINT_03_</span>CrystalDiskInfo.png</p>
+      </div>
+      <dl class="features">
+        <div><dt>Testes sem internet</dt><dd>Teclado ABNT2 ou americano, com ou sem numérico, e teste de áudio e microfone embutidos.</dd></div>
+        <div><dt>Hardware lido na hora</dt><dd>Modelo, serial, processador, memória, tela, saúde dos discos e da bateria.</dd></div>
+        <div><dt>Fotos pelo celular</dt><dd>Escaneie o QR Code e siga o roteiro. As fotos chegam pela rede local, sem nuvem e sem aplicativo.</dd></div>
+        <div><dt>Laudo por link</dt><dd>Os resultados vão direto para o laudo web. O PDF sai igual ao do site, até sem navegador.</dd></div>
+        <div><dt>Nada se perde</dt><dd>OS e fotos excluídas vão para a lixeira da pasta. Para recuperar, é só mover de volta.</dd></div>
+        <div><dt>Atualiza sozinho</dt><dd>Com internet, aparece o botão Atualizar. Só entra versão com a assinatura oficial.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="nuvem" class="band alt">
+    <div class="wrap">
+      <h2>A loja inteira num painel</h2>
+      <p class="sub">Com a conta da loja, cada OS salva vai sozinha para a nuvem. O dono acompanha tudo pelo navegador, até no celular.</p>
+      <dl class="features">
+        <div><dt>Toda OS guardada</dt><dd>Testes, hardware e saúde dos discos de cada OS vão para a nuvem ao salvar. Sem internet, como no WinPE, ficam na fila e vão depois.</dd></div>
+        <div><dt>Fotos no Google Drive da loja</dt><dd>Conecte o Drive da loja uma vez e as fotos, prints e PDFs de cada OS vão para lá, numa pasta por OS. O dono abre direto do painel.</dd></div>
+        <div><dt>A mesma OS em todos os pendrives</dt><dd>As OS da loja chegam sozinhas em cada pendrive conectado, com as fotos. Dá para começar num e terminar em outro.</dd></div>
+        <div><dt>Painel do dono</dt><dd>As OS de todos os pendrives da loja num lugar só, com busca por número, técnico e equipamento.</dd></div>
+        <div><dt>Pendrives sob controle</dt><dd>Cada pendrive ocupa uma vaga da loja. Perdeu ou trocou? O dono pede a liberação da vaga pelo painel.</dd></div>
+        <div><dt>Excluiu no painel, sai dos pendrives</dt><dd>A OS excluída vai para a lixeira de cada pendrive da loja, onde ainda dá para recuperar.</dd></div>
+        <div><dt>Cada loja vê só o que é dela</dt><dd>As regras de acesso ficam no servidor: nenhuma conta enxerga os dados de outra loja.</dd></div>
+        <div><dt>Entra uma vez só</dt><dd>O técnico entra pelo ícone de perfil e não digita a senha de novo. Faltando 7 dias para o plano vencer, o programa avisa.</dd></div>
+      </dl>
+      <div class="actions">
+        <a class="btn primary" href="https://toucan-sistema.web.app/painel/">Entrar no painel</a>
+      </div>
+      <p class="fine">A conta da loja é criada pela Toucan.</p>
+    </div>
+  </section>
+  <section id="programas" class="band">
+    <div class="wrap two">
+      <div>
+        <h2>Programas de teste</h2>
+        <p class="sub">Os programas de terceiros não vêm junto. Baixe cada um no site do fabricante e coloque na pasta de programas. Etapa sem programa aparece como “Não encontrado” e o resto continua funcionando.</p>
+      </div>
+      <table>
+        <caption class="sr">Programa usado em cada etapa</caption>
+        <thead><tr><th scope="col">Etapa</th><th scope="col">Programa</th></tr></thead>
+        <tbody>
+          <tr><td>Hardware e sensores</td><td>HWiNFO</td></tr>
+          <tr><td>Saúde do disco</td><td>CrystalDiskInfo</td></tr>
+          <tr><td>Superfície do disco</td><td>HDDScan</td></tr>
+          <tr><td>Escrita (quando precisa)</td><td>H2testw</td></tr>
+          <tr><td>Bateria</td><td>BatteryInfoView</td></tr>
+          <tr><td>Estresse de GPU</td><td>FurMark</td></tr>
+          <tr><td>Benchmark de GPU</td><td>Unigine Superposition</td></tr>
+          <tr><td>Benchmark de CPU</td><td>Cinebench</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section id="comecar" class="band alt">
+    <div class="wrap">
+      <h2>Do download à primeira OS</h2>
+      <ol class="howto">
+        <li><h3>Baixe o Toucan</h3><p>Coloque o <code>DiagnosticoTecnico.exe</code> numa pasta ou na raiz do pendrive.</p></li>
+        <li><h3>Abra como administrador</h3><p>O CrystalDiskInfo e o HWiNFO precisam dessa permissão.</p></li>
+        <li><h3>Faça a primeira configuração</h3><p>Seu nome, a pasta das OS e a pasta dos programas de teste. O Toucan procura os <code>.exe</code> sozinho.</p></li>
+        <li><h3>Digite o número da OS</h3><p>Em Fazer análise, siga as etapas. Tudo é salvo automaticamente.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="duvidas" class="band">
+    <div class="wrap">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq">
+        <details>
+          <summary>Precisa instalar?</summary>
+          <p>Não. Coloque o <code>DiagnosticoTecnico.exe</code> no pendrive ou numa pasta e abra. Ele pede permissão de administrador, que o CrystalDiskInfo e o HWiNFO precisam.</p>
+        </details>
+        <details>
+          <summary>Funciona sem internet?</summary>
+          <p>Sim. Testes, prints, fotos pelo celular e PDF funcionam sem internet. Ela só é usada para atualizar o programa, abrir o laudo web e enviar as OS para a nuvem. Sem conexão, as OS ficam na fila e são enviadas depois.</p>
+        </details>
+        <details>
+          <summary>Funciona no WinPE?</summary>
+          <p>Sim, no Sergei Strelec WinPE. Ele precisa ter o .NET Framework 4.5 ou superior com Windows Forms. Se faltar, o <code>Iniciar-WinPE.cmd</code> avisa o quê. Deixe o programa no pendrive, não na unidade do WinPE, que se apaga ao reiniciar.</p>
+        </details>
+        <details>
+          <summary>Preciso instalar algum aplicativo no celular?</summary>
+          <p>Não. Escaneie o QR Code com a câmera e as fotos vão pelo navegador, pela rede local. O celular e o computador precisam estar na mesma rede.</p>
+        </details>
+        <details>
+          <summary>Os programas de teste vêm junto?</summary>
+          <p>Não. Baixe cada um no site do fabricante e coloque na pasta de programas. O Toucan encontra os <code>.exe</code> sozinho. Se faltar algum, a etapa aparece como “Não encontrado” e o resto continua funcionando.</p>
+        </details>
+        <details>
+          <summary>As fotos vão para a nuvem?</summary>
+          <p>Vão para o <strong>Google Drive da própria loja</strong>, se ela conectar o Drive: uma pasta por OS, com fotos, prints e PDFs. O Toucan só enxerga os arquivos que ele mesmo criou. A nuvem do Toucan guarda os dados de cada OS: cadastro, testes, hardware e saúde dos discos. Sem o Drive, as fotos ficam só no pendrive.</p>
+        </details>
+        <details>
+          <summary>Preciso de conta para usar?</summary>
+          <p>Não. O programa funciona completo no pendrive. A conta da loja só é necessária para a nuvem e o painel. Se o plano vencer, o programa sai da conta e continua funcionando no pendrive.</p>
+        </details>
+        <details>
+          <summary>Perdi ou troquei o pendrive. E agora?</summary>
+          <p>O dono pede a liberação da vaga pelo painel. No pendrive novo, entre com a conta da loja: as OS e as fotos que já estavam na nuvem e no Google Drive voltam sozinhas. Só se perde o que ainda não tinha sido enviado.</p>
+        </details>
+        <details>
+          <summary>Excluí uma OS por engano. Dá para recuperar?</summary>
+          <p>Dá. Nada é apagado de vez: a OS vai para a pasta <code>.lixeira</code> dentro da pasta das OS. É só mover de volta. Isso vale também para a OS excluída pelo painel.</p>
+        </details>
+        <details>
+          <summary>Como atualizo o programa?</summary>
+          <p>Com internet, aparece o botão Atualizar no topo. Ele baixa a versão nova e reinicia sozinho. Só é instalada uma versão com a assinatura oficial.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <h2>Leve a bancada inteira no bolso.</h2>
+      <a class="btn primary" href="https://github.com/IgVilhena/diagnostico-tecnico-releases/releases/latest/download/DiagnosticoTecnico.exe">Baixar para Windows</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p><strong>Toucan</strong> roda em Windows 10 e 11, ou em WinPE com .NET Framework 4.5 e Windows Forms.</p>
+  <nav class="foot-links" aria-label="Links do rodapé">
+    <a href="https://toucan-sistema.web.app/painel/">Painel da loja</a>
+    <a href="https://github.com/IgVilhena/diagnostico-tecnico-releases/releases">Todas as versões</a>
+    <a href="privacidade/">Privacidade</a>
+  </nav>
+</footer>
+
+<script type="module" src="pendrive.js"></script>
+</body>
+</html>
